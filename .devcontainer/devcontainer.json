@@ -1,0 +1,72 @@
+{
+  // Nom descriptif pour ce conteneur de développement
+  "name": "lexical_nlp_docker",
+
+  "build": {
+    // Utilisation de chemins relatifs pour la portabilité
+    "dockerfile": "../Dockerfile", // Chemin vers Dockerfile depuis le dossier .devcontainer
+    "context": "..",               // Dossier racine du projet comme contexte de build
+
+    // Arguments passés au Dockerfile pendant le build.
+    // NOTE : Ces valeurs (501/20) sont souvent utilisées pour correspondre
+    // à l'UID/GID du premier utilisateur sur macOS. Cela aide à gérer
+    // les permissions sur les fichiers montés pour cet utilisateur spécifique,
+    // mais réduit la portabilité du build si d'autres utilisateurs
+    // avec des UID/GID différents l'utilisent. C'est un compromis courant.
+    "args": {
+      "USER_UID": "501",
+      "USER_GID": "20"
+    }
+  },
+
+  // Dossier de travail par défaut à ouvrir dans VS Code à l'intérieur du conteneur.
+  "workspaceFolder": "/app",
+
+  // --- MODIFIÉ : Définition explicite du montage du workspace ---
+  // Ajouté pour tenter de résoudre le problème où le chemin local Mac était
+  // incorrectement utilisé comme source sur le serveur distant.
+  // L'extension Dev Containers devrait interpréter ${localWorkspaceFolder}
+  // correctement même en contexte distant pour lier votre dossier local Mac.
+  "mounts": [
+    // Monte le dossier local du projet dans le workspace du conteneur
+    "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached"
+    // ^-- Assurez-vous que 'target=/app' correspond bien à la valeur de 'workspaceFolder' ci-dessus.
+    // 'consistency=cached' est généralement un bon compromis performance/synchro.
+
+    // Ajoutez ici d'autres montages si nécessaire, par exemple pour des données
+    // qui se trouvent DÉJÀ sur le serveur distant :
+    // "source=/chemin/sur/serveur/distant/data,target=/data_dans_conteneur,type=bind"
+  ],
+
+  // Arguments additionnels passés à la commande 'docker run' lors du lancement du conteneur.
+  "runArgs": [
+    "--shm-size=1g" // Augmente la taille de la mémoire partagée (/dev/shm).
+  ],
+
+  // Redirection de port (Ex: pour Jupyter)
+  // Rend le port 8888 du conteneur accessible depuis votre machine hôte.
+  "forwardPorts": [8888],
+
+  // Personnalisations spécifiques à VS Code pour cet environnement.
+  "customizations": {
+    "vscode": {
+      // Paramètres VS Code spécifiques à ce conteneur (optionnel).
+      "settings": {
+        // Exemple: "python.defaultInterpreterPath": "/usr/local/bin/python"
+      },
+      // Extensions VS Code à installer automatiquement dans le conteneur.
+      "extensions": [
+        "ms-python.python",       // Support essentiel pour Python
+        "ms-python.vscode-pylance", // Analyse de code avancée, autocomplétion
+        "ms-toolsai.jupyter"      // Support intégré pour les notebooks Jupyter
+      ]
+    }
+  },
+
+  // Spécifie l'utilisateur sous lequel les commandes s'exécuteront dans le conteneur.
+  // Doit correspondre à l'utilisateur créé dans le Dockerfile (souvent avec les args UID/GID).
+  "remoteUser": "vscode",
+
+  // Option commentée car UID/GID sont gérés via build.args.
+  // "updateRemoteUserUID": true,
+}

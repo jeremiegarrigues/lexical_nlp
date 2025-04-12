@@ -1,0 +1,24 @@
+beautifulsoup4==4.13.3
+charset-normalizer==3.4.1
+datasketch==1.6.5
+gensim>=4.3.0
+matplotlib==3.10.1 # Ajouté car signalé comme manquant (DEP001)
+numpy # Version déverrouillée comme dans l'original
+octis # Ajouté pour la cohérence comme dans l'original
+openai==1.70.0
+ortools==9.12.4544
+pandas==2.2.3
+psutil==7.0.0
+pyate==0.5.5
+python-dateutil==2.9.0.post0
+scikit-learn==1.6.1 # Conservé car signalé comme importé (DEP001) malgré le DEP002
+scipy==1.13.1
+seaborn==0.13.2
+smart-open==7.1.0
+spacy==3.8.5
+statsmodels==0.14.4
+tiktoken==0.9.0
+torch==2.6.0
+tqdm==4.67.1
+transformers==4.51.0
+Unidecode==1.3.8

@@ -1,0 +1,41 @@
+# Fichiers et dossiers liés à Git
+.git/
+.gitignore
+
+# Environnement virtuel Python local (très important !)
+.venv/
+env/
+venv/
+*.venv
+
+# Fichiers et dossiers liés à Docker et Dev Containers eux-mêmes
+.dockerignore
+Dockerfile
+.devcontainer/
+
+# Fichiers et dossiers liés à VS Code (configuration locale)
+.vscode/
+
+# Cache et fichiers compilés Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+
+# Fichiers système macOS
+.DS_Store
+
+# Fichiers temporaires ou spécifiques à l'OS/IDE (fichiers de swap vim, etc.)
+*.swp
+*~
+*.tmp
+*.log
+*log.*
+
+# Ajoutez ici d'autres dossiers/fichiers spécifiques à votre projet
+# que vous ne voulez PAS inclure dans l'image Docker.
+# Par exemple, un gros dossier de données brutes qui n'est pas nécessaire dans l'image :
+# data/raw_data/
+# Ou des notebooks de brouillon :
+# brouillons/
